@@ -68,11 +68,14 @@ const SearchPage = () => {
       setBreeds(data);
       setLoadingBreeds(false);
     } catch (error) {
+      if (error.response && error.response.status === 401) {
+        navigate("/"); // Navigate to "/" if the response code is 401
+      }
       setErrorBreeds('Failed to load breeds.');
       setLoadingBreeds(false);
       console.error('Error fetching breeds:', error);
     }
-  },[]);
+  },[navigate]);
 
   // Fetching Dog data
   const fetchDogData = React.useCallback(async () => {

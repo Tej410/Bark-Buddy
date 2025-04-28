@@ -24,9 +24,15 @@ const LoginPage = () => {
   };
 
   return (
-    <Container maxWidth="xs">
+    <Container maxWidth="xs" style={{
+      display: 'flex',
+      flexDirection: 'column',
+      justifyContent: 'center',
+      alignItems: 'center',
+      minHeight: '100vh', // Full viewport height
+    }}>
       <Typography variant="h4" component="h2" gutterBottom>
-        Login
+        Find your Bark Buddy!
       </Typography>
       <form onSubmit={handleSubmit}>
         <TextField
@@ -47,9 +53,16 @@ const LoginPage = () => {
           required
         />
         {error && <Typography color="error">{error}</Typography>}
-        <Button type="submit" variant="contained" color="primary" fullWidth>
-          Log In
-        </Button>
+        <div style={{ display: 'flex', justifyContent: 'center', marginTop: '16px' }}>
+          <Button
+            type="submit"
+            variant="contained"
+            color="primary"
+            style={{ width: '50%' }} // Set the button width to 50%
+          >
+            Log In
+          </Button>
+        </div>
       </form>
     </Container>
   );
