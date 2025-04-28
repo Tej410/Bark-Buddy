@@ -68,4 +68,4 @@ Your app is ready to be deployed!
 
 1. Clone the repository:
    ```bash
-   git clone https://github.com/your-username/bark-buddy.git
+   git clone https://github.com/Tej410/Bark-Buddy.git
