@@ -1,4 +1,3 @@
-// src/components/SearchPage.js
 import React, { useState, useEffect } from 'react';
 import {
   Typography,
@@ -14,9 +13,9 @@ import {
   CardMedia,
   CardContent,
   Button,
-  Pagination, // Import Pagination from MUI
+  Pagination, 
   Dialog,
-  FormControlLabel, // Import FormControlLabel from MUI
+  FormControlLabel,
   DialogTitle,
   DialogContent,
   DialogActions,
@@ -37,13 +36,13 @@ const SearchPage = () => {
   const [sortField, setSortField] = useState('breed');
   const [sortDirection, setSortDirection] = useState('asc');
   const [currentDogs, setCurrentDogs] = useState([]);
-  const [favoriteDogs, setFavoriteDogs] = useState([]); // State for favorite dogs
-  const [match, setMatch] = useState(null); // State for the match result
-  const [matchDialogOpen, setMatchDialogOpen] = useState(false); // State for match dialog
-  // Pagination state
+  const [favoriteDogs, setFavoriteDogs] = useState([]); 
+  const [match, setMatch] = useState(null); 
+  const [matchDialogOpen, setMatchDialogOpen] = useState(false); 
   const [currentPage, setCurrentPage] = useState(1);
-  const itemsPerPage = 8; // Number of dogs per page
+  const itemsPerPage = 8; 
 
+  // Logout 
   const handleLogout = async () => {
     try {
       await logout();
@@ -53,6 +52,7 @@ const SearchPage = () => {
     }
   };
 
+  // Favorites
   const handleFavoriteChange = (dogId) => {
     setFavoriteDogs((prevFavorites) =>
       prevFavorites.includes(dogId)
@@ -61,6 +61,7 @@ const SearchPage = () => {
     );
   };
 
+  // Fetching Breeds
   const fetchBreeds = React.useCallback(async () => {
     try {
       const data = await getBreeds();
@@ -73,29 +74,27 @@ const SearchPage = () => {
     }
   },[]);
 
+  // Fetching Dog data
   const fetchDogData = React.useCallback(async () => {
     setLoadingDogs(true);
     setErrorDogs('');
-    //let combinedDogs = [];
     try {
       if (breeds.length > 0) {
-        //for (const breed of breeds) {
-          const searchParams = {
-            breeds: selectedBreeds,
-            sort: `${sortField}:${sortDirection}`,
-            size: 50,
-          };
-          const searchResponse = await searchDogs(searchParams);
-          if (searchResponse.resultIds && searchResponse.resultIds.length > 0) {
-            const dogDetails = await getDogDetails(searchResponse.resultIds);
-            //combinedDogs = [...combinedDogs, ...dogDetails];
-            const uniqueDogs = Array.from(new Map(dogDetails.map(dog => [dog.id, dog])).values());
-            setAllFilteredDogs(uniqueDogs);
-            const indexOfLastDog = currentPage * itemsPerPage;
-            const indexOfFirstDog = indexOfLastDog - itemsPerPage;
-            setCurrentDogs( uniqueDogs.slice(indexOfFirstDog, indexOfLastDog));
-          }
-        //}
+        const searchParams = {
+          breeds: selectedBreeds,
+          sort: `${sortField}:${sortDirection}`,
+          size: 50,
+        };
+        const searchResponse = await searchDogs(searchParams);
+        if (searchResponse.resultIds && searchResponse.resultIds.length > 0) {
+          const dogDetails = await getDogDetails(searchResponse.resultIds);
+          
+          const uniqueDogs = Array.from(new Map(dogDetails.map(dog => [dog.id, dog])).values());
+          setAllFilteredDogs(uniqueDogs);
+          const indexOfLastDog = currentPage * itemsPerPage;
+          const indexOfFirstDog = indexOfLastDog - itemsPerPage;
+          setCurrentDogs( uniqueDogs.slice(indexOfFirstDog, indexOfLastDog));
+        }
       } else {
         const searchParams = {
           sort: `${sortField}:${sortDirection}`,
@@ -146,8 +145,7 @@ const SearchPage = () => {
     verifyLogin();
   }, [navigate]);
 
-  // Pagination logic
-  
+  // Finding Match
   const handleFindMatch = async () => {
     try {
       const matchResult = await getMatch(favoriteDogs); // Call getMatch with favoriteDogs
@@ -274,11 +272,11 @@ const SearchPage = () => {
         style={{ marginTop: '16px', display: 'flex', justifyContent: 'center' }}
       />
 
-<Button
+      <Button
         variant="contained"
         color="primary"
         onClick={handleFindMatch}
-        disabled={favoriteDogs.length === 0} // Disable if no favorites
+        disabled={favoriteDogs.length === 0}
         style={{ marginTop: '16px' }}
       >
         Find Match
@@ -294,12 +292,12 @@ const SearchPage = () => {
               <Typography>Age: {match.age}</Typography>
               <Typography>Zip Code: {match.zip_code}</Typography>
               <CardMedia
-          component="img"
-          height="140"
-          image={match.img}
-          alt={match.name}
-          style={{ objectFit: 'cover', marginTop: '16px' }}
-        />
+              component="img"
+              height="140"
+              image={match.img}
+              alt={match.name}
+              style={{ objectFit: 'cover', marginTop: '16px' }}
+              />
             </>
           ) : (
             <Typography>No match found.</Typography>

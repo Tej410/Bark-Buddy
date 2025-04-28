@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { TextField, Button, Container, Typography } from '@mui/material';
-import { login } from '../api.js'; // Assuming api.js is in the parent directory
+import { login } from '../api.js';
 
 const LoginPage = () => {
   const navigate = useNavigate();
@@ -13,7 +13,7 @@ const LoginPage = () => {
     event.preventDefault();
     setError('');
     try {
-      const response = await login(name, email); // Assuming login returns user data or a token
+      const response = await login(name, email); 
       localStorage.setItem('user', JSON.stringify(response)); // Store the response in local storage
       console.log(response);
       navigate('/search');
